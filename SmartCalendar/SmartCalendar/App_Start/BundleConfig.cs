@@ -11,6 +11,15 @@ namespace SmartCalendar
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new StyleBundle("~/Content/fullcalendarcss").Include(
+                     "~/Content/themes/jquery.ui.all.css",
+                     "~/Content/fullcalendar.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/fullcalendarjs").Include(
+                      "~/Scripts/jquery-ui-1.10.4.min.js",
+                      "~/Scripts/fullcalendar.min.js",
+                      "~/Scripts/calendar.js"));           
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
