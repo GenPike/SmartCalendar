@@ -39,7 +39,6 @@ namespace SmartCalendar.Controllers
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
-
         [HttpPut]
         public async Task<HttpResponseMessage> UpdateEvent([FromBody]Event item)
         {
@@ -88,10 +87,31 @@ namespace SmartCalendar.Controllers
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
-
-
         }
 
+        [HttpGet]
+        public HttpResponseMessage GetTestEvents()
+        {
+            List<Event> result = new List<Event>();
+            result.Add(GetDemoEvent());
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        Event GetDemoEvent()
+        {
+            return new Event()
+            {
+                Id = "1",
+                Title = "test",
+                Description = "test",
+                Location = "test",
+                Category = Category.Fun,
+                DateAdd = DateTime.Now,
+                DateEnd = DateTime.Now,
+                DateStart = DateTime.Now
+            };
+        }
         #region Helpers
         private HttpResponseMessage GetErrorResult(IdentityResult result)
         {

@@ -74,6 +74,27 @@ namespace SmartCalendar.Models.EFRepositories
             return result;
         } 
 
+        public async Task<Event> TakeEvent(string id)
+        {
+
+            Event dbEntry = await context.Events.FindAsync(id);
+            if (dbEntry != null)
+            {
+                return dbEntry;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<Event> TakeEventsFromTo(string id, DateTime start, DateTime end) 
+        {
+            var result = context.Events
+                .Where(x => x.UserId == id && x.DateStart >= start && x.DateStart <= end);
+            return result;
+        }
+
         private async Task<IdentityResult> SaveChangesAsync()
         {
             try
@@ -87,18 +108,5 @@ namespace SmartCalendar.Models.EFRepositories
             }
         }
 
-        public async Task<Event> TakeEvent(string id)
-        {
-
-            Event dbEntry = await context.Events.FindAsync(id);
-            if (dbEntry != null)
-            {
-                return dbEntry;
-            }
-            else
-            {
-                return null;
-            }
-        } 
     }
 }

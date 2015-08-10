@@ -1,5 +1,6 @@
-﻿@{
+﻿@model SmartCalendar.Models.Event
+@{
     ViewBag.Title = "Home Page";
 }
-
+@Html.EditorFor(x => x.DateStart)
 <div id='calendar'></div>
