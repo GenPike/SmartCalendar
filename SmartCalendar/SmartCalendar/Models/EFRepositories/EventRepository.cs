@@ -13,7 +13,7 @@ namespace SmartCalendar.Models.EFRepositories
         private IStoreAppContext context;
 
         public EventRepository()
-            : this(ApplicationDbContext.Create())
+            : this(new ApplicationDbContext())
         { }
 
         public EventRepository(IStoreAppContext appContext)

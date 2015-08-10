@@ -76,24 +76,15 @@ namespace SmartCalendar.Controllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> GetEvent([FromBody] string id)
+        public async Task<HttpResponseMessage> GetEvent(string id)
         {
 
             Event result = await repository.TakeEvent(id);
 
             if (result == null)
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return Request.CreateResponse(HttpStatusCode.NotFound);
             }
-
-            return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
-        [HttpGet]
-        public HttpResponseMessage GetTestEvents()
-        {
-            List<Event> result = new List<Event>();
-            result.Add(GetDemoEvent());
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

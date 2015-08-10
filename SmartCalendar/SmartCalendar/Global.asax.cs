@@ -1,10 +1,13 @@
-﻿using SmartCalendar.Helpers;
+﻿using Ninject;
+using Ninject.Modules;
+using SmartCalendar.Helpers;
 using SmartCalendar.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -15,14 +18,20 @@ namespace SmartCalendar
     {
         protected void Application_Start()
         {
+            NinjectModule registrations = new NinjectRegistrations();
+            var kernel = new StandardKernel(registrations);
+            var ninjectResolver = new NinjectDependencyResolver(kernel);
+
             Database.SetInitializer(new AppDbInit());
 
             AreaRegistration.RegisterAllAreas();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            DependencyResolver.SetResolver(new NinjectDependencyResolver());
+            DependencyResolver.SetResolver(ninjectResolver); // MVC
+            GlobalConfiguration.Configuration.DependencyResolver = ninjectResolver; // Web API
         }
     }
 }
