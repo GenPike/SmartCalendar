@@ -88,11 +88,19 @@ namespace SmartCalendar.Models.EFRepositories
             }
         }
 
-        public IEnumerable<Event> TakeEventsFromTo(string id, DateTime start, DateTime end) 
+        public IEnumerable<Event> TakeAllFromTo(string userId, double startUnix, double endUnix)
         {
+            DateTime startDate = ConvertFromUnixTimestamp(startUnix);
+            DateTime endDate = ConvertFromUnixTimestamp(endUnix);
             var result = context.Events
-                .Where(x => x.UserId == id && x.DateStart >= start && x.DateStart <= end);
-            return result;
+                .Where(x => x.Id == userId && (x.DateStart >= startDate && x.DateStart <= endDate));
+            return context.Events;
+        }
+
+        private static DateTime ConvertFromUnixTimestamp(double timestamp)
+        {
+            var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(timestamp);
         }
 
         private async Task<IdentityResult> SaveChangesAsync()
