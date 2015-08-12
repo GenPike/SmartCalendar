@@ -28,6 +28,7 @@ namespace SmartCalendar.Models.EFRepositories
 
         public async Task<IdentityResult> Create(Event item)
         {
+            item.DateAdd = DateTime.Now;    // event added now
             context.Events.Add(item);
             var result = await SaveChangesAsync();
             return result;
@@ -41,7 +42,7 @@ namespace SmartCalendar.Models.EFRepositories
                 dbEntry.Title = item.Title;
                 dbEntry.Description = item.Description;
                 dbEntry.Category = item.Category;
-                dbEntry.DateAdd = item.DateAdd;
+                //dbEntry.DateAdd = item.DateAdd;
                 dbEntry.DateStart = item.DateStart;
                 dbEntry.DateEnd = item.DateEnd;
                 dbEntry.Location = item.Location;
