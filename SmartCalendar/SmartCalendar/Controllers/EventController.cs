@@ -28,6 +28,7 @@ namespace SmartCalendar.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
+            item.UserId = User.Identity.GetUserId();
             IdentityResult result = await repository.Create(item);
             HttpResponseMessage errorResult = GetErrorResult(result);
 
@@ -58,7 +59,7 @@ namespace SmartCalendar.Controllers
         }
 
         [HttpDelete]
-        public async Task<HttpResponseMessage> RemoveEvent([FromBody] string id)
+        public async Task<HttpResponseMessage> RemoveEvent([FromUri] string id)
         {
             if (!ModelState.IsValid)
             {
