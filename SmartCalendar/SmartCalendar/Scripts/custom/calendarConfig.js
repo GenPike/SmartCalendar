@@ -24,8 +24,20 @@
         }
     });
 
+    scheduler.locale.labels.section_title = 'Title';
+    scheduler.locale.labels.section_address = 'Location';
+    scheduler.locale.labels.section_type = 'Category';
+
     scheduler.config.lightbox.sections = [
-    { name: "description", height: 200, map_to: "text", type: "textarea", focus: true },
+    { name: "title", height: 30, map_to: "title", type: "textarea"},
+    { name: "description", height: 150, map_to: "text", type: "textarea", focus: true },
+    { name: "address", height: 30, map_to: "location", type: "textarea" },
+    { name: "type", height: 40, map_to: "category", type: "select", options: [
+            { key: 1, label: 'Home'},
+            { key: 2, label: 'Business'},
+            { key: 3, label: 'Study' },
+            { key: 4, label: 'Fun' }
+    ]},
     { name: "time", height: 72, type: "time", map_to: "auto" }
     ];
 
@@ -55,7 +67,7 @@ function AddEvent(ev) {
         dataType: 'json',
         data: JSON.stringify(ev),
         contentType: "application/json;charset=utf-8",
-        success: console.log("Object added!"),
+        success: console.log(ev.id + " Object added!"),
         error: function (x, y, z) {
             console.log(x + '\n' + y + '\n' + z);
         }
