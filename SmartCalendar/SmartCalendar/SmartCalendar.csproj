@@ -295,6 +295,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\custom\calendarConfig.js" />
     <Content Include="Scripts\dhtmlxscheduler\dhtmlxscheduler.js" />
     <Content Include="Scripts\dhtmlxscheduler\ext\dhtmlxscheduler_active_links.js" />
     <Content Include="Scripts\dhtmlxscheduler\ext\dhtmlxscheduler_agenda_view.js" />
@@ -496,7 +497,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\custom\" />
     <Folder Include="Views\Calendar\" />
     <Folder Include="Views\Event\" />
   </ItemGroup>
