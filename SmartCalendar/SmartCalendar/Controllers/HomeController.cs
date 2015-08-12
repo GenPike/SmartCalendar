@@ -14,7 +14,6 @@ namespace SmartCalendar.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.UserId = User.Identity.GetUserId();
             return View();
         }        
     }
