@@ -89,6 +89,22 @@ namespace SmartCalendar.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpGet]
+        public HttpResponseMessage GetAll(string startISO, string endISO)
+        {
+            DateTime startDate;
+            DateTime endDate;
+            var converted = DateTime.TryParse(startISO, out startDate);
+            converted = DateTime.TryParse(endISO, out endDate);
+            if (converted)
+            {
+                var userId = User.Identity.GetUserId();
+                var result = repository.TakeAllFromTo(userId, startDate, endDate).ToArray();
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
+        }
+
         Event GetDemoEvent()
         {
             return new Event()

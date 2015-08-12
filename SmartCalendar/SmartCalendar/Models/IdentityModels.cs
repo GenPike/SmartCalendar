@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using SmartCalendar.Models.Abstracts;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace SmartCalendar.Models
 {
@@ -28,20 +29,24 @@ namespace SmartCalendar.Models
 
     public class Event
     {
-        
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
+
         public string Title { get; set; }
+
+        [JsonProperty(PropertyName = "text")]
         public string Description { get; set; }
 
         public DateTime DateAdd { get; set; }
 
+        [JsonProperty(PropertyName = "start_date")]
         public DateTime DateStart { get; set; }
 
+        [JsonProperty(PropertyName = "end_date")]
         public DateTime DateEnd { get; set; }
 
         public string Location { get; set; }
         public Category Category { get; set; }
-
         [ForeignKey("User")]
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
