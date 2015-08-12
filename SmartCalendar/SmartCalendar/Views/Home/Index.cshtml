@@ -68,30 +68,57 @@
         ];
 
         scheduler.attachEvent("onEventChanged", function(id, ev) {
-            alert(id + "Event changed!");
+            ev.Location = "new location";
+            ev.title = "new title";
+
+            $.ajax({
+                url: '/api/Event/',
+                type: 'PUT',
+                dataType: 'json',
+                data: JSON.stringify(ev),
+                contentType: "application/json;charset=utf-8",
+                success: console.log(ev.id + " Object changed!"),
+                error: function (x, y, z) {
+                    console.log(x + '\n' + y + '\n' + z);
+                }
+            });
+
             return true;
         });
 
         scheduler.attachEvent("onEventDeleted", function(id) {
-            alert(id + "Event deleted!");
+            $.ajax({
+                url: '/api/Event/' + id,
+                type: 'DELETE',
+                contentType: "application/json;charset=utf-8",
+                success: console.log(id + " Object deleted!"),
+                error: function (x, y, z) {
+                    console.log(x + '\n' + y + '\n' + z);
+                }
+            });
+
             return true;
         });
 
-        scheduler.attachEvent("onEventAdded", function(id, ev) {
-            var formatFunc = scheduler.date.date_to_str("%m/%d/%Y %H:%i");
-            ev.start_date = formatFunc(ev.start_date);
-            ev.end_date = formatFunc(ev.end_date);
+        //scheduler.attachEvent("onEventCancel", function (id, flag) {
+        //    console.log(id + " Event onEventCancel! ");
+        //    if (flag) console.log("Event not exist");
+        //    else console.log("Event exists");
+        //});
+
+        scheduler.attachEvent("onEventAdded", function (id, ev) {
+            ev.Location = "new location";
+            ev.title = "new title";
 
             $.ajax({
                 url: '/api/Event/',
                 type: 'POST',
                 dataType: 'json',
-                data: ev,
-                success: function (data) {
-                    alert("Object added!");
-                },
+                data: JSON.stringify(ev),
+                contentType: "application/json;charset=utf-8",
+                success: console.log("Object added!"),
                 error: function (x, y, z) {
-                    alert(x + '\n' + y + '\n' + z);
+                    console.log(x + '\n' + y + '\n' + z);
                 }
             });
 
