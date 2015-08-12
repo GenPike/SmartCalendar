@@ -16,6 +16,10 @@ namespace SmartCalendar.Controllers
         {
             ViewBag.UserId = User.Identity.GetUserId();
             return View();
-        }        
+        }
+        public ActionResult Contact()
+        {
+            return View();
+        }
     }
 }

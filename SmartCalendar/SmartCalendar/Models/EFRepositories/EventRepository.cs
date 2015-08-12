@@ -91,7 +91,7 @@ namespace SmartCalendar.Models.EFRepositories
         public IEnumerable<Event> TakeAllFromTo(string userId, DateTime start, DateTime end)
         {
             var result = context.Events
-                    .Where(x => x.UserId == userId && (x.DateStart >= start && x.DateStart <= end));
+                    .Where(x => x.UserId == userId && (x.DateStart >= start && x.DateStart <= end)).OrderBy(x => x.DateStart);
             return result;
         }
 
