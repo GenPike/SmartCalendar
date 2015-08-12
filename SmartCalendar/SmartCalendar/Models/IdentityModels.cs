@@ -38,6 +38,7 @@ namespace SmartCalendar.Models
         [JsonProperty(PropertyName = "text")]
         public string Description { get; set; }
 
+        [JsonIgnore]
         public DateTime DateAdd { get; set; }
 
         [JsonProperty(PropertyName = "start_date")]
@@ -46,10 +47,17 @@ namespace SmartCalendar.Models
         [JsonProperty(PropertyName = "end_date")]
         public DateTime DateEnd { get; set; }
 
+        [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        [JsonProperty(PropertyName = "category")]
         public Category Category { get; set; }
+
+        [JsonIgnore]
         [ForeignKey("User")]
         public string UserId { get; set; }
+
+        [JsonIgnore]
         public ApplicationUser User { get; set; }
     }
 
