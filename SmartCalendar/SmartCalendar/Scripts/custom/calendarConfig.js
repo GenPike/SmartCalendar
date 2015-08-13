@@ -36,10 +36,19 @@
             { key: 1, label: 'Home'},
             { key: 2, label: 'Business'},
             { key: 3, label: 'Study' },
-            { key: 4, label: 'Fun' }
+            { key: 4, label: 'Fun' },
+            { key: 5, label: 'Other' }
     ]},
     { name: "time", height: 72, type: "time", map_to: "auto" }
     ];
+
+    scheduler.templates.event_class = function (start, end, event) {
+        if (event.category == '1') return "home_event";
+        if (event.category == '2') return "business_event";
+        if (event.category == '3') return "study_event";
+        if (event.category == '4') return "fun_event";
+        return "other_event";
+    };
 
     scheduler.attachEvent("onEventChanged", function (id, ev) {
         UpdateEvent(ev);
@@ -58,9 +67,6 @@
 });
 
 function AddEvent(ev) {
-    ev.Location = "new location";
-    ev.title = "new title";
-
     $.ajax({
         url: '/api/Event/',
         type: 'POST',
@@ -75,9 +81,6 @@ function AddEvent(ev) {
 }
 
 function UpdateEvent(ev) {
-    ev.Location = "new location";
-    ev.title = "new title";
-
     $.ajax({
         url: '/api/Event/',
         type: 'PUT',

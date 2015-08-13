@@ -61,7 +61,7 @@ namespace SmartCalendar.Models
         public ApplicationUser User { get; set; }
     }
 
-    public enum Category { Home = 1, Business, Study, Fun }
+    public enum Category { Home = 1, Business, Study, Fun, Other }
 
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IStoreAppContext
