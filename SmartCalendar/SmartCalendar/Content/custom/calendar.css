@@ -1,0 +1,67 @@
+﻿    html, body{
+        margin:0px;
+        padding:0px;
+        height:100%;
+        overflow:hidden;
+    }
+
+    /*event in day or week view*/
+    .dhx_cal_event.home_event div{
+        background-color: #009966 !important;
+        color: black !important;
+    }
+    .dhx_cal_event.business_event div{
+        background-color: #1e90ff !important;
+        color: black !important;
+    }
+    .dhx_cal_event.study_event div{
+        background-color: #FF9933 !important;
+        color: black !important;
+    }
+    .dhx_cal_event.fun_event div{
+        background-color: #ffd700 !important;
+        color: black !important;
+    }
+    .dhx_cal_event.other_event div{
+        background-color: #a9a9a9 !important;
+        color: black !important;
+    }
+ 
+    /*multi-day event in month view*/
+    .dhx_cal_event_line.home_event{
+        background-color: #009966 !important;
+        color: black !important;
+    }
+    .dhx_cal_event_line.business_event{
+        background-color: #1e90ff !important;
+        color: black !important;
+    }
+    .dhx_cal_event_line.study_event{
+        background-color: #FF9933 !important;
+        color: black !important;
+    }
+    .dhx_cal_event_line.fun_event{
+        background-color: #ffd700 !important;
+        color: black !important;
+    }
+    .dhx_cal_event_line.other_event{
+        background-color: #a9a9a9 !important;
+        color: black !important;
+    }
+ 
+    /*event with fixed time, in month view*/
+    .dhx_cal_event_clear.home_event{
+        color: black !important;
+    }
+    .dhx_cal_event_clear.business_event{
+        color: black !important;
+    }
+    .dhx_cal_event_clear.study_event{
+        color: black !important;
+    }
+    .dhx_cal_event_clear.fun_event{
+        color: black !important;
+    }
+    .dhx_cal_event_clear.other_event{
+        color: black !important;
+    }
