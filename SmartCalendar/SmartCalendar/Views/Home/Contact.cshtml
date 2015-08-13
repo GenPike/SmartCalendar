@@ -1,21 +1,18 @@
 ﻿@{
     Layout = null;
 }
-@using SmartCalendar.Models;
-@*@Html.Hidden("Id", (string)ViewBag.UserId)*@
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <link href="~/Content/Jqueri%20UI/jquery-ui.css" rel="stylesheet" />
-    <link href="~/Content/Jqueri%20UI/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.theme.min.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width" />
     <title>Home page</title>
     <script src="~/Scripts/dhtmlxscheduler/sources/dhtmlxscheduler.js" type="text/javascript"></script>
-    <script src="~/Scripts/helpdesk.js"></script>
     <link rel="stylesheet" href="~/Content/dhtmlxscheduler/dhtmlxscheduler.css" type="text/css">
-    <link rel="stylesheet" href="~/Content/custom/fullScreenProps.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/custom/calendar.css" type="text/css">
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -25,7 +22,7 @@
         <select class="form-control" style="max-width:70px;" id="HowLong">
             @for (int i=1; i <= 31; i++)
             {
-            <option>@i</option>
+                <option>@i</option>
             }
         </select>
         <label for="exampleInputName2">days</label>
@@ -35,7 +32,7 @@
 
     </div>
 
-    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
     <script>
           
@@ -92,8 +89,8 @@
                 else {
                     var strResult = "<table class='table table-hover'><thead><th>Title</th><th>Start date</th><th>End date</th><th>Category</th><th>Location</th><th>Description</th></thead><tbody>";
                     $.each(books, function (index, book) {
-                        strResult += "<tr><td>" + book.Title + "</td><td> " + book.start_date + "</td><td>" + book.end_date +
-                            "</td><td>" + book.Category + "</td><td>" + book.Location + "</td><td>" + book.text;
+                        strResult += "<tr><td>" + book.title + "</td><td> " + book.start_date + "</td><td>" + book.end_date +
+                            "</td><td>" + book.category + "</td><td>" + book.location + "</td><td>" + book.text;
                         //"</td><td><button type='button' class='btn btn-primary'>Редактировать</button></td>" +
                         //"<td><button type='button' class='btn btn-danger'>Удалить</button></td></tr>";
                     });
