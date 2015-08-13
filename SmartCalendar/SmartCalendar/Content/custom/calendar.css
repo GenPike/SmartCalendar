@@ -65,3 +65,12 @@
     .dhx_cal_event_clear.other_event{
         color: black !important;
     }
+
+    /*custom button, similar to the calendar buttons*/
+    .calendar_button {
+        margin-top: 14px;
+        margin-left: 210px;
+        font-size: 9pt !important;
+        font-weight: bold !important;
+        padding-bottom: 7px !important;
+    }
