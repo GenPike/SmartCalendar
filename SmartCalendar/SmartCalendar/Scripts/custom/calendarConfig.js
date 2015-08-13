@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function() {
     //the scheduler is a static object and can be instantiate on the page once
     scheduler.init('scheduler_here', new Date(), "month");
 
@@ -16,10 +16,10 @@
             startISO: start.toISOString(),
             endISO: end.toISOString()
         },
-        success: function (data) {
+        success: function(data) {
             scheduler.parse(data, "json");
         },
-        error: function (x, y, z) {
+        error: function(x, y, z) {
             console.log(x + '\n' + y + '\n' + z);
         }
     });
@@ -29,20 +29,26 @@
     scheduler.locale.labels.section_type = 'Category';
 
     scheduler.config.lightbox.sections = [
-    { name: "title", height: 30, map_to: "title", type: "textarea"},
-    { name: "description", height: 150, map_to: "text", type: "textarea", focus: true },
-    { name: "address", height: 30, map_to: "location", type: "textarea" },
-    { name: "type", height: 40, map_to: "category", type: "select", options: [
-            { key: 1, label: 'Home'},
-            { key: 2, label: 'Business'},
-            { key: 3, label: 'Study' },
-            { key: 4, label: 'Fun' },
-            { key: 5, label: 'Other' }
-    ]},
-    { name: "time", height: 72, type: "time", map_to: "auto" }
+        { name: "title", height: 30, map_to: "title", type: "textarea" },
+        { name: "description", height: 100, map_to: "text", type: "textarea", focus: true },
+        { name: "address", height: 30, map_to: "location", type: "textarea" },
+        {
+            name: "type",
+            height: 40,
+            map_to: "category",
+            type: "select",
+            options: [
+                { key: 1, label: 'Home' },
+                { key: 2, label: 'Business' },
+                { key: 3, label: 'Study' },
+                { key: 4, label: 'Fun' },
+                { key: 5, label: 'Other' }
+            ]
+        },
+        { name: "time", height: 72, type: "calendar_time", map_to: "auto" }
     ];
 
-    scheduler.templates.event_class = function (start, end, event) {
+    scheduler.templates.event_class = function(start, end, event) {
         if (event.category == '1') return "home_event";
         if (event.category == '2') return "business_event";
         if (event.category == '3') return "study_event";
@@ -50,17 +56,17 @@
         return "other_event";
     };
 
-    scheduler.attachEvent("onEventChanged", function (id, ev) {
+    scheduler.attachEvent("onEventChanged", function(id, ev) {
         UpdateEvent(ev);
         return true;
     });
 
-    scheduler.attachEvent("onEventDeleted", function (id) {
+    scheduler.attachEvent("onEventDeleted", function(id) {
         DeleteEvent(id);
         return true;
     });
 
-    scheduler.attachEvent("onEventAdded", function (id, ev) {
+    scheduler.attachEvent("onEventAdded", function(id, ev) {
         AddEvent(ev);
         return true;
     });
