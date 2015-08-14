@@ -11,6 +11,7 @@ namespace SmartCalendar.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Contact()
         {
             return View();
