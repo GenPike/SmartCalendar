@@ -28,6 +28,7 @@ namespace SmartCalendar.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
+            item.UserId = User.Identity.GetUserId();
             IdentityResult result = await repository.Create(item);
             HttpResponseMessage errorResult = GetErrorResult(result);
 
@@ -58,7 +59,7 @@ namespace SmartCalendar.Controllers
         }
 
         [HttpDelete]
-        public async Task<HttpResponseMessage> RemoveEvent([FromBody] string id)
+        public async Task<HttpResponseMessage> RemoveEvent([FromUri] string id)
         {
             if (!ModelState.IsValid)
             {
@@ -87,6 +88,22 @@ namespace SmartCalendar.Controllers
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetAll(string startISO, string endISO)
+        {
+            DateTime startDate;
+            DateTime endDate;
+            var converted = DateTime.TryParse(startISO, out startDate);
+            converted = DateTime.TryParse(endISO, out endDate);
+            if (converted)
+            {
+                var userId = User.Identity.GetUserId();
+                var result = repository.TakeAllFromTo(userId, startDate, endDate).ToArray();
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
 
         Event GetDemoEvent()
