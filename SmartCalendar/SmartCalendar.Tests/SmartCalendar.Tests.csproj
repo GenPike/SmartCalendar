@@ -157,7 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CreateEventTest.cs" />
-    <Compile Include="Controllers\ShowEventTest.cs" />
+    <Compile Include="Controllers\GetEventTest.cs" />
     <Compile Include="Controllers\UpdateEventTest.cs" />
     <Compile Include="Controllers\RemoveEventTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

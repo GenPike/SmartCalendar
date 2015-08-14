@@ -13,7 +13,7 @@ namespace SmartCalendar.Models.EFRepositories
         private IStoreAppContext context;
 
         public EventRepository()
-            : this(ApplicationDbContext.Create())
+            : this(new ApplicationDbContext())
         { }
 
         public EventRepository(IStoreAppContext appContext)
@@ -74,6 +74,33 @@ namespace SmartCalendar.Models.EFRepositories
             return result;
         } 
 
+        public async Task<Event> TakeEvent(string id)
+        {
+
+            Event dbEntry = await context.Events.FindAsync(id);
+            if (dbEntry != null)
+            {
+                return dbEntry;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<Event> TakeAllFromTo(string userId, DateTime start, DateTime end)
+        {
+            var result = context.Events
+                    .Where(x => x.UserId == userId && (x.DateStart >= start && x.DateStart <= end)).OrderBy(x => x.DateStart);
+            return result;
+        }
+
+        private static DateTime ConvertFromUnixTimestamp(double timestamp)
+        {
+            var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(timestamp);
+        }
+
         private async Task<IdentityResult> SaveChangesAsync()
         {
             try
@@ -87,18 +114,5 @@ namespace SmartCalendar.Models.EFRepositories
             }
         }
 
-        public async Task<Event> TakeEvent(string id)
-        {
-
-            Event dbEntry = await context.Events.FindAsync(id);
-            if (dbEntry != null)
-            {
-                return dbEntry;
-            }
-            else
-            {
-                return null;
-            }
-        } 
     }
 }

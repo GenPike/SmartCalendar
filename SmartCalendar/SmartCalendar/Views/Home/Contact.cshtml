@@ -1,17 +1,109 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    Layout = null;
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+@using SmartCalendar.Models;
+@*@Html.Hidden("Id", (string)ViewBag.UserId)*@
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<!DOCTYPE html>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<html>
+<head>
+    <link href="~/Content/Jqueri%20UI/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/Jqueri%20UI/jquery-ui.theme.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Home page</title>
+    <script src="~/Scripts/dhtmlxscheduler/sources/dhtmlxscheduler.js" type="text/javascript"></script>
+    <script src="~/Scripts/helpdesk.js"></script>
+    <link rel="stylesheet" href="~/Content/dhtmlxscheduler/dhtmlxscheduler.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/custom/fullScreenProps.css" type="text/css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="form-inline" style="margin: 10px; ">
+        <button type="submit" class="btn btn-default" onclick="location.href='Index/Home'">&#8592;Back to calendar</button>
+        <label for="exampleInputName2" style="margin-left:20px;" id="lol">Show on nearest</label>
+        <select class="form-control" style="max-width:70px;" id="HowLong">
+            @for (int i=1; i <= 31; i++)
+            {
+            <option>@i</option>
+            }
+        </select>
+        <label for="exampleInputName2">days</label>
+        <button type="submit" class="btn btn-default" style="margin-left:20px;" id="Submitt">Show</button>
+    </div>
+    <div style="max-width:80%;" id="tableBlock">
+
+    </div>
+
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script>
+          
+            $(function Get() {
+                jQuery.support.cors = true;
+                var start = new Date();
+                var end = new Date();
+                end.setDate(end.getDate() + 30);
+
+                $.ajax({
+                    url: '/api/Event/',
+                    dataType: 'json',
+                    data: {
+                        startISO: start.toISOString(),
+                        endISO: end.toISOString()
+                    },
+                    success: function (data) {
+                        WriteEvents(data);
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            });
+
+            $("#Submitt").click(function () {
+
+                var start = new Date();
+                var end = new Date();
+                end.setDate(end.getDate() + parseInt($("#HowLong > option:selected").val()));
+                $.ajax({
+                    url: '/api/Event/',
+                    dataType: 'json',
+                    data: {
+                        startISO: start.toISOString(),
+                        endISO: end.toISOString()
+                    },
+                    success: function (data) {
+                        WriteEvents(data);
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            });
+
+            function WriteEvents(books) {
+                var count=0;
+                $.each(books, function (index, book) {
+                    count++;
+                });
+
+                if (count == 0) $("#tableBlock").html("<h1 style='align-items:center' >No events on chosen period.</h1>");
+                else {
+                    var strResult = "<table class='table table-hover'><thead><th>Title</th><th>Start date</th><th>End date</th><th>Category</th><th>Location</th><th>Description</th></thead><tbody>";
+                    $.each(books, function (index, book) {
+                        strResult += "<tr><td>" + book.Title + "</td><td> " + book.start_date + "</td><td>" + book.end_date +
+                            "</td><td>" + book.Category + "</td><td>" + book.Location + "</td><td>" + book.text;
+                        //"</td><td><button type='button' class='btn btn-primary'>Редактировать</button></td>" +
+                        //"<td><button type='button' class='btn btn-danger'>Удалить</button></td></tr>";
+                    });
+                    $("#tableBlock").html(strResult);
+                }
+
+
+            }
+
+
+    </script>
+</body>
+</html>

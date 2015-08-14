@@ -54,6 +54,7 @@ namespace SmartCalendar.Tests.Controllers
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
             Assert.IsNull(response.Content);
         }
+
         [TestMethod]
         public async Task UpdateEventTest_ShouldReturnSameProduct_and_OkStatusCode()
         {

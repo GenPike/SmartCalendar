@@ -1,31 +1,102 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    Layout = null;
 }
+@Html.Hidden("Id", (string)ViewBag.UserId)
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!DOCTYPE html>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Home page</title>
+    <script src="~/Scripts/dhtmlxscheduler/sources/dhtmlxscheduler.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="~/Content/dhtmlxscheduler/dhtmlxscheduler.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/custom/fullScreenProps.css" type="text/css">
+</head>
+<body>
+    <div id="scheduler_here" class="dhx_cal_container" style='width: 100%; height: 100%;'>
+        <div class="dhx_cal_navline">
+            <div class="dhx_cal_prev_button">&nbsp;</div>
+            <div class="dhx_cal_next_button">&nbsp;</div>
+            <div class="dhx_cal_today_button"></div>
+            <div class="dhx_cal_date"></div>
+            <div class="dhx_cal_tab" name="day_tab" style="right: 204px;"></div>
+            <div class="dhx_cal_tab" name="week_tab" style="right: 140px;"></div>
+            <div class="dhx_cal_tab" name="month_tab" style="right: 76px;"></div>
+        </div>
+        <div class="dhx_cal_header"></div>
+        <div class="dhx_cal_data"></div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+    <form id="customForm" hidden>
+        <input type="text" name="id"/>
+        <input type="text" name="text">
+    </form>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script>
+        //the scheduler is a static object and can be instantiate on the page once
+        scheduler.init('scheduler_here', new Date(), "month");
+
+        $(document).ready(function() {
+            var start = new Date();
+            var end = new Date();
+            start.setDate(end.getDate() - 30);
+            end.setDate(end.getDate() + 30);
+
+            $.ajax({
+                url: '/api/Event/',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    startISO: start.toISOString(),
+                    endISO: end.toISOString()
+                },
+                success: function(data) {
+                    scheduler.parse(data, "json");
+                },
+                error: function(x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        });
+
+        scheduler.config.lightbox.sections = [
+            { name: "description", height: 200, map_to: "text", type: "textarea", focus: true },
+            { name: "time", height: 72, type: "time", map_to: "auto" }
+        ];
+
+        scheduler.attachEvent("onEventChanged", function(id, ev) {
+            alert(id + "Event changed!");
+            return true;
+        });
+
+        scheduler.attachEvent("onEventDeleted", function(id) {
+            alert(id + "Event deleted!");
+            return true;
+        });
+
+        scheduler.attachEvent("onEventAdded", function(id, ev) {
+            var formatFunc = scheduler.date.date_to_str("%m/%d/%Y %H:%i");
+            ev.start_date = formatFunc(ev.start_date);
+            ev.end_date = formatFunc(ev.end_date);
+
+            $.ajax({
+                url: '/api/Event/',
+                type: 'POST',
+                dataType: 'json',
+                data: ev,
+                success: function (data) {
+                    alert("Object added!");
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+
+            return true;
+        });
+    </script>
+</body>
+</html>
