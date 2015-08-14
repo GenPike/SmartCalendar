@@ -40,7 +40,28 @@
 
     <script>
           
-         
+            $(function Get() {
+                jQuery.support.cors = true;
+                var start = new Date();
+                var end = new Date();
+                end.setDate(end.getDate() + 30);
+
+                $.ajax({
+                    url: '/api/Event/',
+                    dataType: 'json',
+                    data: {
+                        startISO: start.toISOString(),
+                        endISO: end.toISOString()
+                    },
+                    success: function (data) {
+                        WriteEvents(data);
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            });
+
             $("#Submitt").click(function () {
 
                 var start = new Date();
