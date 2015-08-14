@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll</HintPath>
@@ -185,6 +191,8 @@
     </Compile>
     <Compile Include="Helpers\AppDbInit.cs" />
     <Compile Include="Helpers\CustomDateTimeConverter.cs" />
+    <Compile Include="Hubs\AlarmCheck.cs" />
+    <Compile Include="Hubs\AlarmHub.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Migrations\201508061243164_InitialCreate.cs" />
     <Compile Include="Migrations\201508061243164_InitialCreate.Designer.cs">
@@ -332,6 +340,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\custom\calendarConfig.js" />
+    <Content Include="Scripts\custom\signalRPopup.js" />
     <Content Include="Scripts\dhtmlxscheduler\dhtmlxscheduler.js" />
     <Content Include="Scripts\dhtmlxscheduler\ext\dhtmlxscheduler_active_links.js" />
     <Content Include="Scripts\dhtmlxscheduler\ext\dhtmlxscheduler_agenda_view.js" />
@@ -489,6 +498,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
