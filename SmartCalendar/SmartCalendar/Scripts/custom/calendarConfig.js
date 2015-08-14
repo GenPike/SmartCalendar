@@ -5,8 +5,8 @@
     // init our calendar
     var start = new Date();
     var end = new Date();
-    start.setDate(end.getDate() - 30);
-    end.setDate(end.getDate() + 30);
+    start.setDate(end.getDate() - 1825);
+    end.setDate(end.getDate() + 1825);
 
     $.ajax({
         url: '/api/Event/',
