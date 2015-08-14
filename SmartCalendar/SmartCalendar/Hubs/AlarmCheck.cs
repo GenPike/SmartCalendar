@@ -14,8 +14,6 @@ namespace SmartCalendar.Hubs
     {
         private readonly IHubContext _uptimeHub;
         private Timer _timer;
-        public DateTime StartDate = DateTime.Now;
-        int x = 0;
 
         private IRepository repository;
 
@@ -38,7 +36,7 @@ namespace SmartCalendar.Hubs
         private void StartTimer()
         {
             var delayStartby = 1000;
-            var repeatEvery = 6000;
+            var repeatEvery = 60000;
 
             _timer = new Timer(BroadcastUptimeToClients, null, delayStartby, repeatEvery);
         }
@@ -47,7 +45,7 @@ namespace SmartCalendar.Hubs
         {
             var userId = User.Identity.GetUserId();
 
-            var res = db.Events.Where(e => e.UserId == userId && (e.DateStart >= StartDate))
+            var res = db.Events.Where(e => /*e.UserId == userId &&*/ (e.DateStart >= DateTime.Now))
                 .ToList()
                 .Where(e => e.DateStart <= DateTime.Now.AddDays(2))
                 .OrderBy(e => e.DateStart);
@@ -58,7 +56,7 @@ namespace SmartCalendar.Hubs
                 {
                     string str = e.DateStart.ToString("g");
 
-                    //if (DateTime.Now.AddMinutes(5).ToString("g").Equals(str))
+                    if (DateTime.Now.AddMinutes(5).ToString("g").Equals(str))
                         _uptimeHub.Clients.All.addNewMessageToPage(e.Title, e.DateStart.ToString("g"));
                     break;
                 }
