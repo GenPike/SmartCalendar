@@ -1,12 +1,14 @@
 ﻿using Ninject;
 using Ninject.Modules;
 using SmartCalendar.Helpers;
+using SmartCalendar.Hubs;
 using SmartCalendar.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -24,6 +26,7 @@ namespace SmartCalendar
 
             Database.SetInitializer(new AppDbInit());
 
+            HostingEnvironment.RegisterObject(new AlarmCheck());
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
